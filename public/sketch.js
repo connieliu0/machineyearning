@@ -7,6 +7,9 @@ const textMargin = 20;
 let userText = ""; // Variable to store the user input
 let receivedMessage = ""; // Store the received message
 
+// Add a flag to track message reception
+let messageReceived = false;
+
 function preload() {
   handPose = ml5.handPose();
 }
@@ -29,23 +32,25 @@ function setup() {
 }
 
 function draw() {
-  // image(cam, 0, 0, width, height);
-    if (hands.length > 0){
-      const x = convertX(hands[0].index_finger_tip.x);
-      const y = convertY(hands[0].index_finger_tip.y);
-      textSize(32);
-      drawTextBox(userText, x, y);
-      if (x>479){
-        sendMessage(userText);
+  if (hands.length > 0 && !messageReceived) {
+    const x = convertX(hands[0].index_finger_tip.x);
+    const y = convertY(hands[0].index_finger_tip.y);
+    textSize(32);
+    drawTextBox(userText, x, y);
+    if (x > 460) {
+      sendMessage(userText);
     }
-    }
-    if (receivedMessage) {
-        drawTextBox("Received message: " + receivedMessage, 20, 100);
-      }
-}
-function p5DisplayMessage(message) {
-    receivedMessage = message;
   }
+  if (messageReceived) {
+    drawTextBox("Received message: " + receivedMessage, 20, 100);
+  }
+}
+
+function p5DisplayMessage(message) {
+  receivedMessage = message;
+  messageReceived = true; // Set the flag when a message is received
+}
+
 function drawTextBox(txt, x, y) {
   clear()
   textSize(32);
@@ -87,5 +92,6 @@ function onInputChange() {
   
   // Optionally clear the input box after storing the value
   inputBox.value('');
+  messageReceived = false; // Reset the flag when user changes input
 }
 
