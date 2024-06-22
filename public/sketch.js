@@ -15,9 +15,7 @@ function preload() {
 }
 
 function setup() {
-  // createCanvas(640, 480)
-  // createCanvas(480, 360);
-  createCanvas(480, (480 / 16) * 9);
+  createCanvas(800, 600);
   const camOptions = {
     flipped: false,
   };
@@ -26,7 +24,8 @@ function setup() {
   handPose.detectStart(cam, gotHands);
     // Create an input box
   inputBox = createInput();
-  inputBox.position(20, 20);
+  // Center the input box horizontally
+  inputBox.position((width - inputBox.width) / 2, 20);
   // Add an event listener for when the user presses ENTER
   inputBox.changed(onInputChange);
 }
@@ -35,7 +34,7 @@ function draw() {
   if (hands.length > 0 && !messageReceived) {
     const x = convertX(hands[0].index_finger_tip.x);
     const y = convertY(hands[0].index_finger_tip.y);
-    textSize(32);
+    textSize(24);
     drawTextBox(userText, x, y);
     if (x > 460) {
       sendMessage(userText);
@@ -53,7 +52,7 @@ function p5DisplayMessage(message) {
 
 function drawTextBox(txt, x, y) {
   clear()
-  textSize(32);
+  textSize(24);
   fill(255, 255, 255);
   
   // Calculate the text height

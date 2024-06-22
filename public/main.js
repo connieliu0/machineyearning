@@ -14,7 +14,6 @@ socket.on('message', (data) => {
 function sendMessage(message) {
     if (partnerId) {
         socket.emit('message', { partner: partnerId, message });
-        console.log("message sent")
     }
 }
 
