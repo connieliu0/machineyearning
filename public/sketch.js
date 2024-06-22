@@ -32,6 +32,7 @@ function setup() {
 
 function draw() {
   if (hands.length > 0 && !messageReceived) {
+    console.log("running");
     const x = convertX(hands[0].index_finger_tip.x);
     const y = convertY(hands[0].index_finger_tip.y);
     textSize(24);
